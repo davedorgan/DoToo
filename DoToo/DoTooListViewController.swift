@@ -10,7 +10,7 @@ import UIKit
 
 class DoTooListViewController: UITableViewController {
 
-    let itemArray = ["Vacumn", "water filter", "Job App"]
+    var itemArray = ["Vacumn", "water filter", "Job App"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +48,32 @@ class DoTooListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
-    
-}
 
+//MARK - Add New Items
+
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        // local variable to give access to the addTextField
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New DoToo Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //what will happen once the user clicks the Add Item button on our UIAlert.
+            
+            self.itemArray.append(textField.text!)
+            
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+
+}
