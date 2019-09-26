@@ -11,10 +11,15 @@ import UIKit
 class DoTooListViewController: UITableViewController {
 
     var itemArray = ["Vacumn", "water filter", "Job App"]
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let items = defaults.array(forKey: "DoTooListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     // MARK - Tableview Datasource Methods
@@ -60,6 +65,8 @@ class DoTooListViewController: UITableViewController {
             //what will happen once the user clicks the Add Item button on our UIAlert.
             
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "DoTooListArray")
             
             self.tableView.reloadData()
         }
